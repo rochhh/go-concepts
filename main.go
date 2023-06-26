@@ -3,13 +3,26 @@ package main
 import "fmt"
 
 func main() {
-    const name = "roch"
-	const age = 22
+   
+	/*
+	old way -
 
-	// const  msg = fmt.Sprintf("heya %v you're %v years old", name, age )
-	/* Cannot do the above as const with sprintf throws an err */
-	msg := fmt.Sprintf("heya %v you're %v years old", name, age )
-	
+	length := getLength(6)
 
-	fmt.Println(msg)
+	if length > 10 {
+		fp("....")
+	}
+	just to save a line the below code is a syntax 
+	*/
+
+	if length := getLength(6) ; length > 10 {
+		fmt.Println("the number is big")
+	}
+
+	fmt.Println("")
+}
+
+
+func getLength(number int) int {
+	return number
 }
