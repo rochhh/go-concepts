@@ -4,22 +4,30 @@ import "fmt"
 
 func main() {
    
-   rect := shape{
-      length: 10,
-      width: 10,
+   bk := corporate{
+      name: "burger king",
+      employees: 100000,
    }
-   fmt.Println(rect.area())
-}
 
-type shape struct{
-   length int
-   width int 
+   fmt.Println(bk.employees + bk.factoryClose())  
+
 }
 
 
-// struct specific method , can only be used by obj created from struct and no one else 
-func (x shape) area () int{
-   return x.length * x.width
+func (c corporate ) factoryRunner() string {
+   return c.name
 }
 
+func (c corporate) factoryClose() int {
+   return 2
+}
 
+type corporate struct{
+   name string 
+   employees int 
+}
+
+type factory interface{
+   factoryRunner() string
+   factoryClose() 
+}
