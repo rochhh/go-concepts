@@ -3,27 +3,23 @@ package main
 import "fmt"
 
 func main() {
-   h1 := person{}
-   h1.name = "roch"
-   h1.sound = "meow"
-   h1.insaan.someVar = "i have no idea"
-   fmt.Println(h1.insaan.someVar)
-}
-
-type person struct {
-   name string
-   age int 
-   height float32
-   animal // embedded struct ; call by p.sound 
-
-   insaan struct {
-      someVar string // nested struct ; call by p.insaan.someVar
+   
+   rect := shape{
+      length: 10,
+      width: 10,
    }
-
+   fmt.Println(rect.area())
 }
 
-type animal struct{
-   name string
-   sound string 
+type shape struct{
+   length int
+   width int 
 }
+
+
+// struct specific method , can only be used by obj created from struct and no one else 
+func (x shape) area () int{
+   return x.length * x.width
+}
+
 
