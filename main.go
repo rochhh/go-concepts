@@ -3,26 +3,27 @@ package main
 import "fmt"
 
 func main() {
-   
-	/*
-	old way -
-
-	length := getLength(6)
-
-	if length > 10 {
-		fp("....")
-	}
-	just to save a line the below code is a syntax 
-	*/
-
-	if length := getLength(6) ; length > 10 {
-		fmt.Println("the number is big")
-	}
-
-	fmt.Println("")
+   h1 := person{}
+   h1.name = "roch"
+   h1.sound = "meow"
+   h1.insaan.someVar = "i have no idea"
+   fmt.Println(h1.insaan.someVar)
 }
 
+type person struct {
+   name string
+   age int 
+   height float32
+   animal // embedded struct ; call by p.sound 
 
-func getLength(number int) int {
-	return number
+   insaan struct {
+      someVar string // nested struct ; call by p.insaan.someVar
+   }
+
 }
+
+type animal struct{
+   name string
+   sound string 
+}
+
