@@ -3,8 +3,11 @@ package main
 import "fmt"
 
 func main() {
-   
-   fmt.Println("What is type assertion?")
+   var i int
+   for i  < 10 {
+      fmt.Println(i)
+      i ++
+   }   
    
 }
 
