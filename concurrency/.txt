@@ -1,0 +1,42 @@
+benchmark on page 283
+
+
+
+/*
+
+jargons - 
+
+process - an instance of a program run by the os 
+         os allocates resources like memory and 
+         makes sure other process do not access it 
+         
+         Process may have 1 or more threads 
+
+Go routines - lightweight processes managed by GO runtime 
+               refer page 205 
+
+
+concurrency -  context switching 
+parallelism -  context switching but among multiple cpu cores 
+
+
+how go works - 
+
+
+
+   OS kernel                  -------    GO scheduler ( interacts with the OS ) 
+
+      CPU                                GO Runtime (app)
+
+core1    core2   core3                    
+
+
+thread1  thread2 ...
+
+task1    task5                               Main Goroutine 
+task2    task6                               task1 go routine 
+task3    task7                               task2 go routine
+task4    task8                               task3 go routine
+
+tasks are nothing but for eg , functions
+*/
