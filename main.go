@@ -2,21 +2,22 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"mime/multipart"
 
-	// "html/template"
+	"io"
 	"log"
 	"net/http"
 	"os"
 )
 
-type Data struct {
-	FileBody *multipart.FileHeader
-}
+// type Data struct {
+// 	Filename string
+// 	Size     int64
+// 	content   []byte
+// }
 
 func main(){
 	//ReadFile()
+	ProcessData("/data" , ProcessData )
 	http.HandleFunc("/" , MainPage )
 	http.HandleFunc("/upload" ,getDataFromFrontEnd )
 	err := http.ListenAndServe(":8080" , nil )
@@ -32,36 +33,42 @@ func MainPage( w http.ResponseWriter , r *http.Request ){
 func getDataFromFrontEnd(w http.ResponseWriter, r *http.Request)  {
 	r.ParseMultipartForm(10 << 20)
 	file , handler , err := r.FormFile("fileInput")
-	fmt.Printf("the file is %v and the handler is %v \n" , file , handler)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 	f , err := os.OpenFile("./uploads/"+handler.Filename,os.O_WRONLY |os.O_CREATE , 0666)
-	fmt.Printf("the f value is %v  \n" , f )
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer f.Close()
-	n , err := io.Copy( f , file )
-	fmt.Printf("the n value is %v  \n" , n)
+	_ , err = io.Copy( f , file )
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Fprintf(w , "File uploaded successfully ! %s\n" , handler.Filename)
 }
 
-func ReadFile(){
-	f , err := os.Open("dictionary/words.txt")
+func ProcessData( w http.ResponseWriter , r *http.Request ){
+	file, err := os.Open("dictionary/words.txt")
+	
+	fi , handler , err := r.FormFile("fileInput")
 	if err != nil {
 		log.Fatal(err)
 	}
-	buf := make([]byte , 2048)
-	n , err := f.Read(buf)
+	defer fi.Close()
+	ufi := handler.Filename 
+	u , err := os.Open("uploads/"+ufi)
+	fmt.Println(u)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(n)
-	fmt.Println(string(buf))
+	defer file.Close()
+	buf := make([]byte , 2048 )
+	data , err := file.Read(buf)
+	if err != nil {
+		log.Fatal(err)
+	}
+	slurs := string(buf[:data])
+	fmt.Println(slurs)
 }
-
